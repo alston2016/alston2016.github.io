@@ -450,6 +450,120 @@
 
 
     
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/05/27/week2/" itemprop="url">
+                  Week2
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-27T10:35:16+08:00" content="2016-05-27">
+              2016-05-27
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="工作进展"><a href="#工作进展" class="headerlink" title="工作进展"></a>工作进展</h2><p>本周我们着重调研了当前存在的<strong>sfm</strong>算法，并对他们做了一个分析与总结。<br>当前主流的sfm算法有sequtial sfm，hierarchical sfm以及global sfm。在Richard Hartley写的《Multiview Geometry in Computer Vision》里面着重强调的是<strong>sequential sfm</strong>算法。就是我们所说的主流的sfm算法。</p>
+<blockquote>
+<p>大致的流程图如下：</p>
+</blockquote>
+<p><img src="http://ww1.sinaimg.cn/mw1024/9b9776b5jw1f4hug05bxaj20ub0l277e.jpg" alt="pic1"></p>
+<p><img src="http://ww1.sinaimg.cn/mw1024/9b9776b5jw1f4hug0ilp6j20tb0lxwhw.jpg" alt="pic2"></p>
+<p><img src="http://ww2.sinaimg.cn/mw1024/9b9776b5jw1f4hug0xabsj20tz0lv423.jpg" alt="pic3"></p>
+<blockquote>
+<p>然而由于误差的累积，会出现<strong>drift error</strong>的问题。如下图所示：</p>
+</blockquote>
+<p><img src="http://ww1.sinaimg.cn/mw1024/9b9776b5jw1f4hug1brv6j20rw0gnjsp.jpg" alt="pic4"></p>
+<blockquote>
+<p>因此，便需要如同SLAM技术所需要的闭环检测。<br>然而随着大数据时代来临，sequential sfm这种添加一帧估计一帧相机参数的方式效率低下，尽管在特征匹配以及bundle adjustment里应用了gpu加速技术，然而效率仍旧低下。因而近些年又产生了<strong>hierarchical sfm</strong>以及<strong>global sfm</strong>。</p>
+</blockquote>
+<p><img src="http://ww2.sinaimg.cn/mw1024/9b9776b5jw1f4hug1ni5sj20tn0d974v.jpg" alt="pic5"></p>
+<p><img src="http://ww2.sinaimg.cn/mw1024/9b9776b5jw1f4hug1zoffj20tn0ia0ut.jpg" alt="pic6"></p>
+<p><img src="http://ww1.sinaimg.cn/mw1024/9b9776b5jw1f4hug2cshxj20tz0fe40q.jpg" alt="pic7"></p>
+<blockquote>
+<p>由此我们可见在初始场景确定了之后，hierarchical sfm进行了分层添加图片方法，先对子场景做一个融合，然后再进行姿态估计和场景重构。而global sfm则对所有图片一视同仁，直接将所有图片输入，算出他们两两之间的两视图几何几何关系，然后先解决旋转再解决平移，最后对初始结构和场景做一个整体的光束平差。这样做的好处避免在sfm选取初始结构时花费大量的精力，同时对误差能够做一个平均分摊，因而有效地避免了drift error的问题。</p>
+</blockquote>
+<h2 id="下步计划"><a href="#下步计划" class="headerlink" title="下步计划"></a>下步计划</h2><p>由上面分析可知，global sfm不仅在精度上有所提升，在效率上由于只做一次bundle adjustment并且采用图模型来求解外参，因而极大的提升了效率。所以我们最终决定采用global sfm作为最终的算法。下周我们将实现算法并争取在数据库上跑通算法。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
@@ -491,7 +605,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">3</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
